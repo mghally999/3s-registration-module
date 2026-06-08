@@ -75,7 +75,7 @@ npm run dev      # http://localhost:5173, proxies /api to http://localhost:8080
 
 ## UI
 
-The frontend is a formal, institutional two-pane layout: a navy brand panel with a restrained bronze-gold accent and a transitional serif (Source Serif 4) for headings, alongside the form on a responsive two-column CSS grid (first/last, mobile/email, governorate/city, building/flat side by side) that collapses to a single column under ~720px. It has tactile focus/hover/invalid input states, a staggered entrance that respects `prefers-reduced-motion`, an accessible success/error banner plus a corner toast, and keeps every label/`aria-*` wiring intact. Before/after screenshots (desktop + mobile) are in [`frontend/docs/`](frontend/docs/).
+The frontend is a formal, institutional design: a centered card on a calm canvas with a restrained bronze-gold accent and a transitional serif (Source Serif 4) for headings. Fields lay out on a responsive two-column CSS grid (first/last, mobile/email, governorate/city, building/flat side by side) that collapses to a single column under ~720px. It has tactile focus/hover/invalid input states, a staggered entrance that respects `prefers-reduced-motion`, an accessible success/error banner plus a corner toast, and keeps every label/`aria-*` wiring intact. Before/after screenshots (desktop + mobile) are in [`frontend/docs/`](frontend/docs/).
 
 ## Deployment
 
