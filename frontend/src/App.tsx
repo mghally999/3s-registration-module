@@ -33,6 +33,10 @@ export default function App() {
 
         {tab === 'form' ? <RegistrationForm /> : <RegistrationsList />}
       </div>
+
+      <footer className="app-footer">
+        Made with absolute respect and love to 3s by Mohammed Ghally 🤍
+      </footer>
     </main>
   );
 }

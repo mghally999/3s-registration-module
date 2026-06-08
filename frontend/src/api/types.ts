@@ -53,6 +53,31 @@ export interface PagedResult<T> {
   totalPages: number;
 }
 
+// full detail returned by GET /api/registrations/{id}.
+export interface AddressDetail {
+  id: string;
+  governorateId: number;
+  governorateName: string;
+  cityId: number;
+  cityName: string;
+  street: string;
+  buildingNumber: string;
+  flatNumber: string;
+  isPrimary: boolean;
+}
+
+export interface RegistrationDetail {
+  id: string;
+  firstName: string;
+  middleName?: string | null;
+  lastName: string;
+  birthDate: string;
+  mobileNumber: string;
+  email: string;
+  createdAtUtc: string;
+  addresses: AddressDetail[];
+}
+
 // rfc7807 problem details. validation errors arrive under `errors`, keyed by
 // field; a 409 conflict carries a `field` so we can target the right input.
 export interface ProblemDetails {

@@ -6,6 +6,7 @@ import {
   Governorate,
   PagedResult,
   ProblemDetails,
+  RegistrationDetail,
   RegistrationSummary,
 } from './types';
 
@@ -43,6 +44,8 @@ export const api = {
       `/api/registrations?page=${page}&pageSize=${pageSize}` +
         (search ? `&search=${encodeURIComponent(search)}` : ''),
     ),
+
+  getRegistration: (id: string) => getJson<RegistrationDetail>(`/api/registrations/${id}`),
 
   async createRegistration(payload: CreateRegistrationPayload): Promise<CreateRegistrationResult> {
     const response = await fetch(`${baseUrl}/api/registrations`, {
