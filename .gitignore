@@ -21,3 +21,7 @@ appsettings.Development.json
 
 # os
 .DS_Store
+
+# local archives / assignment docs (not part of the source)
+Archive.zip
+*.pdf
