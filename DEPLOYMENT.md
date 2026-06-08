@@ -52,4 +52,4 @@ CORS on the API is already open (`AllowAnyOrigin`), so the Vercel frontend can c
 
 ## $0 alternative
 
-If you prefer not to pay for SQL hosting: deploy only the **frontend to Vercel**, keep the backend runnable locally (`docker compose up`), and send the repo + README + `AUDIT.md` + the screenshots in `frontend/docs/`. The reviewer can run the full stack in two commands.
+If you prefer not to pay for SQL hosting: deploy only the **frontend to Vercel**, keep the backend runnable locally (`docker compose up`), and send the repo + README + the screenshots in `frontend/docs/`. The reviewer can run the full stack in two commands.
