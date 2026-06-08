@@ -4,7 +4,9 @@ import {
   CreateRegistrationPayload,
   CreateRegistrationResult,
   Governorate,
+  PagedResult,
   ProblemDetails,
+  RegistrationSummary,
 } from './types';
 
 // base url is empty in dev (vite proxies /api) and can be set per environment.
@@ -35,6 +37,12 @@ export const api = {
 
   getCities: (governorateId: number) =>
     getJson<City[]>(`/api/lookups/cities?governorateId=${governorateId}`),
+
+  searchRegistrations: (page: number, pageSize: number, search: string) =>
+    getJson<PagedResult<RegistrationSummary>>(
+      `/api/registrations?page=${page}&pageSize=${pageSize}` +
+        (search ? `&search=${encodeURIComponent(search)}` : ''),
+    ),
 
   async createRegistration(payload: CreateRegistrationPayload): Promise<CreateRegistrationResult> {
     const response = await fetch(`${baseUrl}/api/registrations`, {

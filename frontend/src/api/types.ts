@@ -34,6 +34,25 @@ export interface CreateRegistrationResult {
   id: string;
 }
 
+// a row in the registrations list/search endpoint.
+export interface RegistrationSummary {
+  id: string;
+  fullName: string;
+  email: string;
+  mobileNumber: string;
+  createdAtUtc: string;
+  addressCount: number;
+}
+
+// the generic paged envelope the list endpoint returns.
+export interface PagedResult<T> {
+  items: T[];
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+}
+
 // rfc7807 problem details. validation errors arrive under `errors`, keyed by
 // field; a 409 conflict carries a `field` so we can target the right input.
 export interface ProblemDetails {
