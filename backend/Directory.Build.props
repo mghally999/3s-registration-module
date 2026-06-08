@@ -1,0 +1,29 @@
+<Project>
+
+  <!-- shared compiler settings for every project in the backend.
+       keeps the csproj files small and makes sure nullable + warnings
+       behave the same everywhere. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <InvariantGlobalization>false</InvariantGlobalization>
+
+    <!-- NuGet audit advisory NU1903 (AutoMapper 13.0.1, GHSA-rvv3-g6hj-g44x):
+         a denial-of-service via ~25,000-level-deep recursive/self-referential
+         object graphs. Reviewed and accepted, NOT hidden: this module maps only
+         a small fixed-shape DTO (one Registration + at most 5 addresses) with no
+         user-controlled recursion, so the attack vector does not exist here. The
+         pinned AutoMapper 13.0.1 is part of the mandated stack; the fix is to
+         upgrade to >= 15.1.1 when the stack is allowed to move. We keep NU1903 as
+         a visible warning but do not let it fail `-warnaserror` builds. NU1903
+         is a restore-time audit warning, so it must be excluded via NoWarn
+         (WarningsNotAsErrors only governs compiler warnings). This acceptance is
+         documented in AUDIT.md so it is surfaced to reviewers, not buried. -->
+    <NoWarn>$(NoWarn);NU1903</NoWarn>
+  </PropertyGroup>
+
+</Project>

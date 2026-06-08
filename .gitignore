@@ -1,0 +1,23 @@
+# dotnet
+**/bin/
+**/obj/
+*.user
+
+# node / frontend
+node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/playwright-report/
+frontend/test-results/
+
+# env + ide
+.env
+.env.local
+# local app settings with real credentials (the .example stays committed)
+appsettings.Development.json
+.vs/
+.idea/
+.vscode/
+
+# os
+.DS_Store
