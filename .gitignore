@@ -28,3 +28,6 @@ Archive.zip
 
 # pnpm lockfile (repo uses npm) — artifact of a local workaround
 pnpm-lock.yaml
+
+# typescript incremental build cache
+frontend/*.tsbuildinfo
