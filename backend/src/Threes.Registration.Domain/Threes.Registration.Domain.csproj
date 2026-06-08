@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- the domain layer is deliberately empty of package references.
+       no ef core, no mediatr, no automapper. if you ever see a using
+       for one of those in here, something went wrong with the layering. -->
+  <PropertyGroup>
+    <RootNamespace>Threes.Registration.Domain</RootNamespace>
+    <AssemblyName>Threes.Registration.Domain</AssemblyName>
+  </PropertyGroup>
+
+</Project>

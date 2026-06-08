@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Threes.Registration.Persistence</RootNamespace>
+    <AssemblyName>Threes.Registration.Persistence</AssemblyName>
+  </PropertyGroup>
+
+  <!-- ef core + sql server live here only. the rest of the app talks to
+       the database through the IRegistrationDbContext interface in the
+       application layer, so nobody else references ef core directly. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Threes.Registration.Domain\Threes.Registration.Domain.csproj" />
+    <ProjectReference Include="..\Threes.Registration.Application\Threes.Registration.Application.csproj" />
+  </ItemGroup>
+
+</Project>
