@@ -1,6 +1,7 @@
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Threes.Registration.Application.Common.Abstractions;
 using Threes.Registration.Infrastructure.Lookups;
 using Threes.Registration.Infrastructure.Messaging;
@@ -22,7 +23,26 @@ public static class DependencyInjection
         services.AddSingleton<IMobileNumberNormalizer, LibPhoneNumberNormalizer>();
         services.AddSingleton<ILookupCache, LookupCache>();
 
-        services.AddSingleton<IEmailSender, LoggingEmailSender>();
+        // email: use the real SendGrid sender when an API key is configured,
+        // otherwise the logging stub (so local dev and tests need no account).
+        var emailOptions = new EmailOptions();
+        configuration.GetSection(EmailOptions.SectionName).Bind(emailOptions);
+        services.AddSingleton(emailOptions);
+
+        if (!string.IsNullOrWhiteSpace(emailOptions.SendGridApiKey))
+        {
+            // a single long-lived HttpClient is the recommended pattern for a
+            // fixed endpoint; no IHttpClientFactory dependency needed.
+            services.AddSingleton<IEmailSender>(sp => new SendGridEmailSender(
+                new HttpClient(),
+                emailOptions,
+                sp.GetRequiredService<ILogger<SendGridEmailSender>>()));
+        }
+        else
+        {
+            services.AddSingleton<IEmailSender, LoggingEmailSender>();
+        }
+
         services.AddSingleton<ISmsSender, LoggingSmsSender>();
 
         var messaging = new MessagingOptions();
