@@ -1,0 +1,724 @@
+/* =============================================================================
+   3S GROUP — Citizen Registration
+   Formal, institutional visual system: a deep navy with a restrained bronze-gold
+   hairline accent, a transitional serif for headings and a neutral sans for the
+   body, layered surfaces and soft elevation. Light, calm canvas; white cards.
+   All component markup, labels, copy and ARIA wiring are unchanged — this file
+   only dresses them.
+   ========================================================================== */
+
+:root {
+  /* canvas + surfaces */
+  --canvas: #eceff3;
+  --surface: #ffffff;
+  --surface-2: #f7f9fb;
+
+  /* text */
+  --ink: #14253c; /* headings / strong */
+  --text: #2c3a4d; /* body */
+  --muted: #5f6e80; /* hints, secondary */
+
+  /* brand: institutional navy + bronze-gold */
+  --brand: #133a63;
+  --brand-700: #0f2c4d;
+  --brand-900: #0a2138;
+  --gold: #9a7b34;
+  --gold-200: #d9c189;
+
+  /* state */
+  --error: #99302c;
+  --error-bg: #f9ecea;
+  --success: #1d6b45;
+  --success-bg: #e9f3ec;
+
+  /* lines + focus */
+  --line: #d6dde5;
+  --ring: rgba(19, 58, 99, 0.30);
+  --ring-gold: rgba(154, 123, 52, 0.45);
+
+  /* elevation */
+  --shadow-sm: 0 1px 2px rgba(16, 33, 56, 0.06), 0 1px 3px rgba(16, 33, 56, 0.08);
+  --shadow-md: 0 6px 18px rgba(16, 33, 56, 0.08), 0 2px 6px rgba(16, 33, 56, 0.06);
+  --shadow-lg: 0 24px 60px -20px rgba(10, 33, 56, 0.40);
+
+  --radius: 12px;
+  --radius-sm: 9px;
+
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  background: var(--canvas);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ----------------------------------------------------------------------------
+   Two-pane shell: brand panel on the left, the form on the right. Collapses to
+   a single stacked column under 900px.
+   ------------------------------------------------------------------------- */
+.app-shell {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: clamp(300px, 34%, 460px) 1fr;
+}
+
+/* --- left brand pane --- */
+.brand-pane {
+  position: relative;
+  overflow: hidden;
+  color: #eaf0f7;
+  background:
+    radial-gradient(120% 80% at 15% 10%, rgba(154, 123, 52, 0.18), transparent 55%),
+    radial-gradient(90% 70% at 90% 100%, rgba(38, 86, 140, 0.45), transparent 60%),
+    linear-gradient(160deg, var(--brand-700) 0%, var(--brand-900) 100%);
+  border-right: 1px solid rgba(217, 193, 137, 0.30);
+}
+
+/* faint engraved grid texture for an official, document-like feel */
+.brand-pane::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 85%);
+  pointer-events: none;
+}
+
+.brand-inner {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  min-height: 100dvh;
+}
+
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  color: #fdf7e8;
+  background: linear-gradient(160deg, rgba(217, 193, 137, 0.25), rgba(154, 123, 52, 0.10));
+  border: 1px solid rgba(217, 193, 137, 0.55);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.brand-org {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-200);
+}
+
+.brand-headline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
+  line-height: 1.12;
+  color: #fbfcfe;
+}
+
+.brand-sub {
+  margin: 0;
+  max-width: 34ch;
+  color: #c6d3e2;
+  line-height: 1.6;
+}
+
+.brand-points {
+  list-style: none;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.brand-points li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+  color: #d7e1ec;
+}
+
+.brand-points li::before {
+  content: '';
+  flex: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background:
+    linear-gradient(160deg, var(--gold-200), var(--gold));
+  box-shadow: 0 0 0 4px rgba(217, 193, 137, 0.12);
+}
+
+.brand-foot {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #9fb1c6;
+  border-top: 1px solid rgba(217, 193, 137, 0.20);
+}
+
+/* --- right form pane --- */
+.form-pane {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(1.25rem, 4vw, 3.25rem) clamp(1rem, 4vw, 3rem);
+}
+
+.registration-form {
+  width: 100%;
+  max-width: 720px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(1.4rem, 3vw, 2.5rem);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+/* a thin gold rule along the top edge of the card — an official seal cue */
+.registration-form::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: linear-gradient(90deg, var(--brand), var(--gold) 55%, var(--gold-200));
+}
+
+h1 {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+/* a quiet lead line under the title, populated by the form's first section */
+.form-lead {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.12rem;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+h2::before {
+  content: '';
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: linear-gradient(160deg, var(--gold-200), var(--gold));
+  flex: none;
+}
+
+section {
+  margin-bottom: 1.75rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Two-column grid for fields. Pairs sit side by side on desktop and collapse to
+   a single column under 720px.
+   ------------------------------------------------------------------------- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.1rem;
+}
+
+@media (max-width: 720px) {
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  margin-bottom: 1.05rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.field label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin-bottom: 0.4rem;
+}
+
+.field label span[aria-hidden='true'] {
+  color: var(--gold);
+}
+
+.field input,
+.field select {
+  font-family: inherit;
+  font-size: 0.98rem;
+  color: var(--text);
+  padding: 0.62rem 0.7rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.field input::placeholder {
+  color: #9aa7b6;
+}
+
+.field input:hover,
+.field select:hover {
+  border-color: #b9c4d0;
+}
+
+.field input:focus,
+.field select:focus,
+.btn:focus-visible,
+.field input:focus-visible,
+.field select:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 1px;
+  border-color: var(--brand);
+  box-shadow: 0 0 0 4px rgba(19, 58, 99, 0.08);
+}
+
+.field input[aria-invalid='true'],
+.field select[aria-invalid='true'] {
+  border-color: var(--error);
+  background: var(--error-bg);
+}
+
+.field input[aria-invalid='true']:focus,
+.field select[aria-invalid='true']:focus {
+  outline-color: rgba(153, 48, 44, 0.35);
+  box-shadow: 0 0 0 4px rgba(153, 48, 44, 0.10);
+}
+
+.field-inline label {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.field-inline input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--brand);
+}
+
+.field-hint {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.validation-message {
+  margin: 0.35rem 0 0;
+  color: var(--error);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* ----------------------------------------------------------------------------
+   Address cards
+   ------------------------------------------------------------------------- */
+.address-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.25rem 1.35rem;
+  margin: 0 0 1.1rem;
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  box-shadow: var(--shadow-sm);
+}
+
+.address-card legend {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--brand);
+  padding: 0 0.5rem;
+  margin-left: -0.25rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Buttons
+   ------------------------------------------------------------------------- */
+.btn {
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1.1rem;
+  font-size: 0.96rem;
+  transition: transform 0.12s ease, box-shadow 0.16s ease, background 0.16s ease,
+    border-color 0.16s ease, color 0.16s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: linear-gradient(165deg, var(--brand) 0%, var(--brand-900) 100%);
+  color: #fff;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1.1rem;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 10px 22px -12px rgba(10, 33, 56, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.btn-primary:hover:not(:disabled) {
+  box-shadow: 0 16px 30px -14px rgba(10, 33, 56, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.btn-primary:disabled {
+  background: #aab8c8;
+  color: #f2f5f8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-add {
+  background: transparent;
+  color: var(--brand);
+  border: 1px dashed #b6c4d3;
+  width: 100%;
+}
+
+.btn-add:hover:not(:disabled) {
+  background: var(--surface-2);
+  border-color: var(--brand);
+}
+
+.btn-add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-remove {
+  background: transparent;
+  color: var(--error);
+  border: 1px solid transparent;
+  padding: 0.45rem 0.7rem;
+  margin-top: 0.4rem;
+  font-size: 0.88rem;
+}
+
+.btn-remove:hover {
+  background: var(--error-bg);
+}
+
+/* ----------------------------------------------------------------------------
+   Banners
+   ------------------------------------------------------------------------- */
+.banner {
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 0.9rem;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+}
+
+.banner::before {
+  font-weight: 700;
+  flex: none;
+}
+
+.banner-error {
+  background: var(--error-bg);
+  color: var(--error);
+  border-color: rgba(153, 48, 44, 0.25);
+}
+
+.banner-error::before {
+  content: '!';
+}
+
+.banner-success {
+  background: var(--success-bg);
+  color: var(--success);
+  border-color: rgba(29, 107, 69, 0.25);
+}
+
+.banner-success::before {
+  content: '\2713';
+}
+
+.form-actions {
+  margin-top: 0.5rem;
+}
+
+/* ----------------------------------------------------------------------------
+   Motion — one orchestrated entrance, restrained micro-interactions. Fully
+   disabled under prefers-reduced-motion.
+   ------------------------------------------------------------------------- */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .registration-form {
+    animation: riseIn 0.5s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .registration-form > section,
+  .registration-form > h1,
+  .registration-form > .form-lead,
+  .registration-form > .form-actions {
+    animation: riseIn 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .registration-form > h1 {
+    animation-delay: 0.04s;
+  }
+  .registration-form > .form-lead {
+    animation-delay: 0.08s;
+  }
+  .registration-form > section:nth-of-type(1) {
+    animation-delay: 0.12s;
+  }
+  .registration-form > section:nth-of-type(2) {
+    animation-delay: 0.18s;
+  }
+  .registration-form > .form-actions {
+    animation-delay: 0.24s;
+  }
+
+  .address-card {
+    animation: riseIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+
+  .brand-inner > * {
+    animation: riseIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+  .brand-inner > *:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+  .brand-inner > *:nth-child(3) {
+    animation-delay: 0.12s;
+  }
+  .brand-inner > *:nth-child(4) {
+    animation-delay: 0.18s;
+  }
+  .brand-inner > *:nth-child(5) {
+    animation-delay: 0.24s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Responsive: collapse the two-pane shell into a single stacked column. The
+   brand pane becomes a compact header band.
+   ------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-inner {
+    position: static;
+    min-height: 0;
+    gap: 0.85rem;
+    padding: 1.5rem 1.25rem 1.75rem;
+  }
+
+  .brand-points,
+  .brand-foot {
+    display: none;
+  }
+
+  .brand-headline {
+    font-size: 1.45rem;
+  }
+
+  .brand-sub {
+    max-width: none;
+  }
+
+  .form-pane {
+    padding: 1.25rem 1rem 2.5rem;
+  }
+}
+
+/* ----------------------------------------------------------------------------
+   Toast — corner feedback. Decorative only (aria-hidden); the role=status /
+   role=alert banners inside the form remain the accessible message.
+   ------------------------------------------------------------------------- */
+.toast-viewport {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: flex;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-width: 240px;
+  max-width: min(92vw, 380px);
+  padding: 0.8rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--brand);
+  box-shadow: var(--shadow-md);
+}
+
+.toast-success {
+  border-left-color: var(--success);
+}
+
+.toast-error {
+  border-left-color: var(--error);
+}
+
+.toast-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: #fff;
+}
+
+.toast-success .toast-icon {
+  background: var(--success);
+}
+
+.toast-error .toast-icon {
+  background: var(--error);
+}
+
+.toast-success .toast-icon::before {
+  content: '\2713';
+}
+
+.toast-error .toast-icon::before {
+  content: '!';
+}
+
+.toast-text {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.toast-close {
+  flex: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  color: var(--muted);
+  padding: 0 0.15rem;
+}
+
+.toast-close:hover {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toast {
+    animation: toastIn 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .toast-viewport {
+    left: 0.6rem;
+    right: 0.6rem;
+    top: 0.6rem;
+  }
+
+  .toast {
+    max-width: none;
+    width: 100%;
+  }
+}
