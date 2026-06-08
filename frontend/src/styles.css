@@ -66,132 +66,17 @@ body {
 }
 
 /* ----------------------------------------------------------------------------
-   Two-pane shell: brand panel on the left, the form on the right. Collapses to
-   a single stacked column under 900px.
+   Page: a single, centered two-column form on a calm canvas (no side panel).
    ------------------------------------------------------------------------- */
-.app-shell {
+.page {
   min-height: 100dvh;
-  display: grid;
-  grid-template-columns: clamp(300px, 34%, 460px) 1fr;
-}
-
-/* --- left brand pane --- */
-.brand-pane {
-  position: relative;
-  overflow: hidden;
-  color: #eaf0f7;
-  background:
-    radial-gradient(120% 80% at 15% 10%, rgba(154, 123, 52, 0.18), transparent 55%),
-    radial-gradient(90% 70% at 90% 100%, rgba(38, 86, 140, 0.45), transparent 60%),
-    linear-gradient(160deg, var(--brand-700) 0%, var(--brand-900) 100%);
-  border-right: 1px solid rgba(217, 193, 137, 0.30);
-}
-
-/* faint engraved grid texture for an official, document-like feel */
-.brand-pane::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 34px 34px;
-  mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 85%);
-  pointer-events: none;
-}
-
-.brand-inner {
-  position: sticky;
-  top: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  padding: clamp(1.75rem, 4vw, 3rem);
-  min-height: 100dvh;
-}
-
-.brand-mark {
-  width: 60px;
-  height: 60px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.02em;
-  color: #fdf7e8;
-  background: linear-gradient(160deg, rgba(217, 193, 137, 0.25), rgba(154, 123, 52, 0.10));
-  border: 1px solid rgba(217, 193, 137, 0.55);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
-.brand-org {
-  margin: 0;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold-200);
-}
-
-.brand-headline {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
-  line-height: 1.12;
-  color: #fbfcfe;
-}
-
-.brand-sub {
-  margin: 0;
-  max-width: 34ch;
-  color: #c6d3e2;
-  line-height: 1.6;
-}
-
-.brand-points {
-  list-style: none;
-  margin: 0.4rem 0 0;
-  padding: 0;
-  display: grid;
-  gap: 0.7rem;
-}
-
-.brand-points li {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  font-size: 0.95rem;
-  color: #d7e1ec;
-}
-
-.brand-points li::before {
-  content: '';
-  flex: none;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  background:
-    linear-gradient(160deg, var(--gold-200), var(--gold));
-  box-shadow: 0 0 0 4px rgba(217, 193, 137, 0.12);
-}
-
-.brand-foot {
-  margin-top: auto;
-  padding-top: 1.5rem;
-  font-size: 0.8rem;
-  color: #9fb1c6;
-  border-top: 1px solid rgba(217, 193, 137, 0.20);
-}
-
-/* --- right form pane --- */
-.form-pane {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: clamp(1.25rem, 4vw, 3.25rem) clamp(1rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1rem, 4vw, 2rem);
+  background:
+    radial-gradient(75% 55% at 50% -8%, rgba(19, 58, 99, 0.07), transparent 60%),
+    var(--canvas);
 }
 
 .registration-form {
@@ -546,22 +431,6 @@ section {
   .address-card {
     animation: riseIn 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
   }
-
-  .brand-inner > * {
-    animation: riseIn 0.6s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  }
-  .brand-inner > *:nth-child(2) {
-    animation-delay: 0.06s;
-  }
-  .brand-inner > *:nth-child(3) {
-    animation-delay: 0.12s;
-  }
-  .brand-inner > *:nth-child(4) {
-    animation-delay: 0.18s;
-  }
-  .brand-inner > *:nth-child(5) {
-    animation-delay: 0.24s;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -577,33 +446,10 @@ section {
    Responsive: collapse the two-pane shell into a single stacked column. The
    brand pane becomes a compact header band.
    ------------------------------------------------------------------------- */
-@media (max-width: 900px) {
-  .app-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .brand-inner {
-    position: static;
-    min-height: 0;
-    gap: 0.85rem;
-    padding: 1.5rem 1.25rem 1.75rem;
-  }
-
-  .brand-points,
-  .brand-foot {
-    display: none;
-  }
-
-  .brand-headline {
-    font-size: 1.45rem;
-  }
-
-  .brand-sub {
-    max-width: none;
-  }
-
-  .form-pane {
+@media (max-width: 720px) {
+  .page {
     padding: 1.25rem 1rem 2.5rem;
+    align-items: stretch;
   }
 }
 
