@@ -79,7 +79,7 @@ The frontend is a formal, institutional design: a centered card on a calm canvas
 
 ## Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) — frontend on Vercel, API + SQL Server + RabbitMQ on Railway, with the exact environment variables and the links to share.
+The app splits cleanly for hosting: the **frontend** (static SPA) deploys to **Vercel** (`frontend/vercel.json`), and the **API + SQL Server + RabbitMQ** deploy to a container host such as **Railway** (`railway.json` builds the API from `backend/Dockerfile`). Set `VITE_API_BASE_URL` on the frontend to the API URL, and on the API set `ConnectionStrings__RegistrationDatabase` and the `Messaging__*` variables (CORS is already open). The API applies its EF Core migrations and seeds the lookups on first start.
 
 ## API
 

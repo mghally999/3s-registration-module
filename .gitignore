@@ -31,3 +31,6 @@ pnpm-lock.yaml
 
 # typescript incremental build cache
 frontend/*.tsbuildinfo
+
+# pnpm workspace config (repo uses npm)
+frontend/pnpm-workspace.yaml
