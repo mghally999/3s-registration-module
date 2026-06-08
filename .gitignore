@@ -25,3 +25,6 @@ appsettings.Development.json
 # local archives / assignment docs (not part of the source)
 Archive.zip
 *.pdf
+
+# pnpm lockfile (repo uses npm) — artifact of a local workaround
+pnpm-lock.yaml
